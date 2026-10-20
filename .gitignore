@@ -1,0 +1,22 @@
+# dependencies and build output
+node_modules/
+dist/
+dist-private/
+.generated/
+coverage/
+.wrangler/
+
+# secrets (never commit)
+.env
+.env.*
+!.env.example
+.dev.vars*
+
+# confidential source documents: input only, kept out of Git (see docs/sources/README.md)
+docs/sources/*
+!docs/sources/README.md
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+*.local
