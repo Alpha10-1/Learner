@@ -1,0 +1,10 @@
+{
+  // The service worker runs in ServiceWorkerGlobalScope: WebWorker lib, no DOM.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2023", "WebWorker"],
+    "types": []
+  },
+  "include": ["src/sw.ts"],
+  "exclude": []
+}

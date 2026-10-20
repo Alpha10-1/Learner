@@ -1,0 +1,24 @@
+{
+  // App code (DOM). The service worker and Node-side files have their own configs:
+  // tsconfig.sw.json (WebWorker lib) and tsconfig.node.json (vite.config.ts, scripts/).
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023", "DOM", "DOM.Iterable"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "jsx": "react-jsx",
+    "jsxImportSource": "preact",
+    "types": ["vite/client"],
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitOverride": true,
+    "noFallthroughCasesInSwitch": true,
+    "isolatedModules": true,
+    "verbatimModuleSyntax": true,
+    "erasableSyntaxOnly": true,
+    "skipLibCheck": true,
+    "noEmit": true
+  },
+  "include": ["src", "shared", "tests"],
+  "exclude": ["src/sw.ts"]
+}

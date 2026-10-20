@@ -1,0 +1,14 @@
+{
+  // Files run by Node or Vite's config loader. Node strips types without checking them, so tsc
+  // enforces what Node needs: erasable syntax only, explicit .ts extensions, `import type`.
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "lib": ["ES2023"],
+    "types": ["node"],
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "allowImportingTsExtensions": true
+  },
+  "include": ["vite.config.ts", "scripts"],
+  "exclude": []
+}
