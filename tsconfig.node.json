@@ -9,6 +9,6 @@
     "moduleResolution": "NodeNext",
     "allowImportingTsExtensions": true
   },
-  "include": ["vite.config.ts", "scripts"],
+  "include": ["vite.config.ts", "scripts", "tests/content"],
   "exclude": []
 }

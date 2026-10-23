@@ -1,10 +1,14 @@
+import { fileURLToPath } from 'node:url';
 import preact from '@preact/preset-vite';
 import { VitePWA } from 'vite-plugin-pwa';
 import { defineConfig } from 'vitest/config';
+import { contentPlugin } from './scripts/content-plugin.ts';
 
 export default defineConfig({
   plugins: [
     preact(),
+    // Unit tests don't need built content (and shouldn't fail because a lesson is mid-edit).
+    process.env.VITEST ? null : contentPlugin(),
     VitePWA({
       strategies: 'injectManifest',
       srcDir: 'src',
@@ -30,12 +34,16 @@ export default defineConfig({
         ],
       },
       injectManifest: {
-        globPatterns: ['**/*.{js,css,html}'],
+        // The shell plus the content index and public phase chunks (§6.2).
+        globPatterns: ['**/*.{js,css,html}', 'content/*.json'],
+        // Both folders hold content-hashed file names, so the URL alone identifies a version.
+        dontCacheBustURLsMatching: /^(assets|content)\//,
         rollupFormat: 'iife', // classic worker script; the 'es' path trips a Vite 8 deprecation warning
       },
     }),
   ],
   test: {
     include: ['tests/**/*.test.{ts,tsx}'],
+    alias: { 'virtual:mq-content': fileURLToPath(new URL('./tests/fixtures/virtual-content.ts', import.meta.url)) },
   },
 });

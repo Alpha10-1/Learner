@@ -1,0 +1,1035 @@
+{
+  "id": "alfah-lubisi-skills-mastery",
+  "sourceDoc": "Alfah_Lubisi_Skills_Mastery_Roadmap.pdf",
+  "sourceDate": "2026-10-20",
+  "notes": [
+    "Each credential pairs with one workplace artifact (portfolio item)."
+  ],
+  "phases": [
+    {
+      "id": "p01",
+      "n": 1,
+      "title": "Tharisa Operations and Business Context",
+      "label": "FOUNDATION",
+      "track": "main",
+      "competence": "Explain what a KPI means physically, what decision it supports, and what operational factors could make it misleading.",
+      "skills": [
+        {
+          "id": "p01-s01",
+          "n": 1,
+          "title": "Mining and material movement"
+        },
+        {
+          "id": "p01-s02",
+          "n": 2,
+          "title": "Processing and plant flow"
+        },
+        {
+          "id": "p01-s03",
+          "n": 3,
+          "title": "Genesis, Voyager and Vulcan context"
+        },
+        {
+          "id": "p01-s04",
+          "n": 4,
+          "title": "Engineering and maintenance"
+        },
+        {
+          "id": "p01-s05",
+          "n": 5,
+          "title": "Logistics"
+        },
+        {
+          "id": "p01-s06",
+          "n": 6,
+          "title": "Shift structures and production measures"
+        },
+        {
+          "id": "p01-s07",
+          "n": 7,
+          "title": "Equipment and asset context"
+        },
+        {
+          "id": "p01-s08",
+          "n": 8,
+          "title": "Downtime, throughput, recovery and grade"
+        }
+      ]
+    },
+    {
+      "id": "p02",
+      "n": 2,
+      "title": "Capstone Fundamentals and Architecture",
+      "label": "FOUNDATION",
+      "track": "main",
+      "competence": "Draw and narrate the flow from operational source to business decision, including where data is ingested, stored, queried, visualised and documented.",
+      "skills": [
+        {
+          "id": "p02-s01",
+          "n": 1,
+          "title": "Capstone purpose and portal"
+        },
+        {
+          "id": "p02-s02",
+          "n": 2,
+          "title": "Operational source systems"
+        },
+        {
+          "id": "p02-s03",
+          "n": 3,
+          "title": "Data Loader"
+        },
+        {
+          "id": "p02-s04",
+          "n": 4,
+          "title": "Azure Data Factory"
+        },
+        {
+          "id": "p02-s05",
+          "n": 5,
+          "title": "Azure Data Explorer"
+        },
+        {
+          "id": "p02-s06",
+          "n": 6,
+          "title": "KQL and reusable query functions"
+        },
+        {
+          "id": "p02-s07",
+          "n": 7,
+          "title": "Asset Centre"
+        },
+        {
+          "id": "p02-s08",
+          "n": 8,
+          "title": "Grafana"
+        },
+        {
+          "id": "p02-s09",
+          "n": 9,
+          "title": "Capstone Wiki and documentation"
+        },
+        {
+          "id": "p02-s10",
+          "n": 10,
+          "title": "SQL databases, APIs, IP.21/historian, LIMS, weighbridge, IoT, PLC/SCADA and D365 integrations"
+        }
+      ]
+    },
+    {
+      "id": "p03",
+      "n": 3,
+      "title": "Azure Data Explorer, KQL and SQL",
+      "label": "CORE TECHNICAL",
+      "track": "main",
+      "competence": "Independently answer a defined operational question with a readable KQL query and explain the logic and limitations.",
+      "skills": [
+        {
+          "id": "p03-s01",
+          "n": 1,
+          "title": "ADX clusters, databases, tables, schemas and functions"
+        },
+        {
+          "id": "p03-s02",
+          "n": 2,
+          "title": "Basic KQL: take, project, where, sort and date filters"
+        },
+        {
+          "id": "p03-s03",
+          "n": 3,
+          "title": "Aggregations: summarize, count, sum, average, minimum and maximum"
+        },
+        {
+          "id": "p03-s04",
+          "n": 4,
+          "title": "Time-series analysis"
+        },
+        {
+          "id": "p03-s05",
+          "n": 5,
+          "title": "Joins and time-window matching"
+        },
+        {
+          "id": "p03-s06",
+          "n": 6,
+          "title": "Duplicate handling and dataset profiling"
+        },
+        {
+          "id": "p03-s07",
+          "n": 7,
+          "title": "Reusable query logic"
+        },
+        {
+          "id": "p03-s08",
+          "n": 8,
+          "title": "SQL foundations after KQL"
+        }
+      ]
+    },
+    {
+      "id": "p04",
+      "n": 4,
+      "title": "Data Quality, Validation and Governance",
+      "label": "CORE TECHNICAL",
+      "track": "main",
+      "competence": "Produce a validation note that demonstrates whether the result can be trusted and records known gaps.",
+      "skills": [
+        {
+          "id": "p04-s01",
+          "n": 1,
+          "title": "Data lineage and source-to-target mapping"
+        },
+        {
+          "id": "p04-s02",
+          "n": 2,
+          "title": "Reconciliation to source"
+        },
+        {
+          "id": "p04-s03",
+          "n": 3,
+          "title": "Missing values and duplicates"
+        },
+        {
+          "id": "p04-s04",
+          "n": 4,
+          "title": "Timestamps and time zones"
+        },
+        {
+          "id": "p04-s05",
+          "n": 5,
+          "title": "Units and refresh frequency"
+        },
+        {
+          "id": "p04-s06",
+          "n": 6,
+          "title": "Metric definitions"
+        },
+        {
+          "id": "p04-s07",
+          "n": 7,
+          "title": "Data ownership"
+        },
+        {
+          "id": "p04-s08",
+          "n": 8,
+          "title": "Permissions, restricted data and role-based access"
+        },
+        {
+          "id": "p04-s09",
+          "n": 9,
+          "title": "Auditability and documented exceptions"
+        }
+      ]
+    },
+    {
+      "id": "p05",
+      "n": 5,
+      "title": "Business Analysis and Business Cases",
+      "label": "DELIVERY",
+      "track": "main",
+      "competence": "Convert a vague request into a testable problem statement, evidence plan and decision-ready business case.",
+      "skills": [
+        {
+          "id": "p05-s01",
+          "n": 1,
+          "title": "Stakeholder interviews"
+        },
+        {
+          "id": "p05-s02",
+          "n": 2,
+          "title": "Requirements gathering"
+        },
+        {
+          "id": "p05-s03",
+          "n": 3,
+          "title": "Problem and outcome definition"
+        },
+        {
+          "id": "p05-s04",
+          "n": 4,
+          "title": "Current-state process mapping"
+        },
+        {
+          "id": "p05-s05",
+          "n": 5,
+          "title": "Available versus missing data"
+        },
+        {
+          "id": "p05-s06",
+          "n": 6,
+          "title": "Feasibility, benefits, costs and risks"
+        },
+        {
+          "id": "p05-s07",
+          "n": 7,
+          "title": "Value propositions and success measures"
+        },
+        {
+          "id": "p05-s08",
+          "n": 8,
+          "title": "Living business cases"
+        },
+        {
+          "id": "p05-s09",
+          "n": 9,
+          "title": "Decision history and reusable findings"
+        }
+      ]
+    },
+    {
+      "id": "p06",
+      "n": 6,
+      "title": "Power BI, Grafana and Visual Analytics",
+      "label": "DELIVERY",
+      "track": "main",
+      "competence": "Build a report that is traceable to validated data, communicates the required decision and includes appropriate access controls.",
+      "skills": [
+        {
+          "id": "p06-s01",
+          "n": 1,
+          "title": "Power Query"
+        },
+        {
+          "id": "p06-s02",
+          "n": 2,
+          "title": "Data modelling and relationships"
+        },
+        {
+          "id": "p06-s03",
+          "n": 3,
+          "title": "Measures"
+        },
+        {
+          "id": "p06-s04",
+          "n": 4,
+          "title": "Report and dashboard design"
+        },
+        {
+          "id": "p06-s05",
+          "n": 5,
+          "title": "Filters and drilldown"
+        },
+        {
+          "id": "p06-s06",
+          "n": 6,
+          "title": "KPI design"
+        },
+        {
+          "id": "p06-s07",
+          "n": 7,
+          "title": "Workspaces and controlled access"
+        },
+        {
+          "id": "p06-s08",
+          "n": 8,
+          "title": "Row-level security"
+        },
+        {
+          "id": "p06-s09",
+          "n": 9,
+          "title": "Grafana panels, variables, trends and operational monitoring"
+        }
+      ]
+    },
+    {
+      "id": "p07",
+      "n": 7,
+      "title": "SharePoint and Knowledge Management",
+      "label": "DELIVERY",
+      "track": "main",
+      "competence": "Publish a maintained, searchable knowledge page that allows another analyst to reuse the work without repeating discovery.",
+      "skills": [
+        {
+          "id": "p07-s01",
+          "n": 1,
+          "title": "Sites and document libraries"
+        },
+        {
+          "id": "p07-s02",
+          "n": 2,
+          "title": "Information architecture and metadata"
+        },
+        {
+          "id": "p07-s03",
+          "n": 3,
+          "title": "Permissions and versioning"
+        },
+        {
+          "id": "p07-s04",
+          "n": 4,
+          "title": "Search and discoverability"
+        },
+        {
+          "id": "p07-s05",
+          "n": 5,
+          "title": "Knowledge pages"
+        },
+        {
+          "id": "p07-s06",
+          "n": 6,
+          "title": "Authoritative document practices"
+        },
+        {
+          "id": "p07-s07",
+          "n": 7,
+          "title": "Structuring content for AI retrieval"
+        },
+        {
+          "id": "p07-s08",
+          "n": 8,
+          "title": "Preserving project context, assumptions and decision history"
+        }
+      ]
+    },
+    {
+      "id": "p08",
+      "n": 8,
+      "title": "Python, APIs and Application Foundations",
+      "label": "ENGINEERING",
+      "track": "main",
+      "competence": "Create a small, documented analysis or service that consumes data, performs a useful transformation and produces a repeatable result.",
+      "skills": [
+        {
+          "id": "p08-s01",
+          "n": 1,
+          "title": "Python syntax and problem solving"
+        },
+        {
+          "id": "p08-s02",
+          "n": 2,
+          "title": "Pandas and NumPy"
+        },
+        {
+          "id": "p08-s03",
+          "n": 3,
+          "title": "Visualisation"
+        },
+        {
+          "id": "p08-s04",
+          "n": 4,
+          "title": "Working with files and structured data"
+        },
+        {
+          "id": "p08-s05",
+          "n": 5,
+          "title": "JSON and APIs"
+        },
+        {
+          "id": "p08-s06",
+          "n": 6,
+          "title": "Scikit-learn foundations"
+        },
+        {
+          "id": "p08-s07",
+          "n": 7,
+          "title": "Application architecture basics"
+        }
+      ]
+    },
+    {
+      "id": "p09",
+      "n": 9,
+      "title": "Git, Azure DevOps and Collaboration",
+      "label": "ENGINEERING",
+      "track": "main",
+      "competence": "Move a locally developed solution into a shared repository and complete a controlled change through review and merge.",
+      "skills": [
+        {
+          "id": "p09-s01",
+          "n": 1,
+          "title": "Repositories"
+        },
+        {
+          "id": "p09-s02",
+          "n": 2,
+          "title": "Branches, commits, push and pull"
+        },
+        {
+          "id": "p09-s03",
+          "n": 3,
+          "title": "Pull requests and code review"
+        },
+        {
+          "id": "p09-s04",
+          "n": 4,
+          "title": "Merging and conflict awareness"
+        },
+        {
+          "id": "p09-s05",
+          "n": 5,
+          "title": "Azure DevOps Repos"
+        },
+        {
+          "id": "p09-s06",
+          "n": 6,
+          "title": "Boards and work tracking"
+        },
+        {
+          "id": "p09-s07",
+          "n": 7,
+          "title": "Pipelines and controlled releases"
+        },
+        {
+          "id": "p09-s08",
+          "n": 8,
+          "title": "Change management and shared development practices"
+        }
+      ]
+    },
+    {
+      "id": "p10",
+      "n": 10,
+      "title": "Azure Hosting, Identity and Deployment",
+      "label": "ENGINEERING",
+      "track": "main",
+      "competence": "Deploy a simple authenticated application in an approved environment and explain its key components and access model.",
+      "skills": [
+        {
+          "id": "p10-s01",
+          "n": 1,
+          "title": "Azure resource fundamentals"
+        },
+        {
+          "id": "p10-s02",
+          "n": 2,
+          "title": "Web hosting/App Service concepts"
+        },
+        {
+          "id": "p10-s03",
+          "n": 3,
+          "title": "Linux-hosted applications"
+        },
+        {
+          "id": "p10-s04",
+          "n": 4,
+          "title": "Databases and supporting services"
+        },
+        {
+          "id": "p10-s05",
+          "n": 5,
+          "title": "Microsoft identity and authentication"
+        },
+        {
+          "id": "p10-s06",
+          "n": 6,
+          "title": "Credentials and secret handling"
+        },
+        {
+          "id": "p10-s07",
+          "n": 7,
+          "title": "Development, test and production environments"
+        },
+        {
+          "id": "p10-s08",
+          "n": 8,
+          "title": "Monitoring, networking and security basics"
+        }
+      ]
+    },
+    {
+      "id": "p11",
+      "n": 11,
+      "title": "Testing, UAT and Service Delivery",
+      "label": "DELIVERY",
+      "track": "main",
+      "competence": "Create a test pack that another person can execute and link defects or incidents to an auditable resolution.",
+      "skills": [
+        {
+          "id": "p11-s01",
+          "n": 1,
+          "title": "Acceptance criteria"
+        },
+        {
+          "id": "p11-s02",
+          "n": 2,
+          "title": "Test cases and expected results"
+        },
+        {
+          "id": "p11-s03",
+          "n": 3,
+          "title": "User acceptance testing"
+        },
+        {
+          "id": "p11-s04",
+          "n": 4,
+          "title": "Defect logging, severity and priority"
+        },
+        {
+          "id": "p11-s05",
+          "n": 5,
+          "title": "Retesting and release validation"
+        },
+        {
+          "id": "p11-s06",
+          "n": 6,
+          "title": "ServiceNow incidents, requests, ownership, escalation, SLA awareness and closure"
+        }
+      ]
+    },
+    {
+      "id": "p12",
+      "n": 12,
+      "title": "AI Foundations and Responsible Use",
+      "label": "AI FOUNDATION",
+      "track": "alongside",
+      "competence": "Use AI safely for a real task, validate the result, document the risk and explain why the use is appropriate.",
+      "skills": [
+        {
+          "id": "p12-s01",
+          "n": 1,
+          "title": "AI versus automation versus analytics"
+        },
+        {
+          "id": "p12-s02",
+          "n": 2,
+          "title": "Generative AI"
+        },
+        {
+          "id": "p12-s03",
+          "n": 3,
+          "title": "Prompting"
+        },
+        {
+          "id": "p12-s04",
+          "n": 4,
+          "title": "Hallucinations and limitations"
+        },
+        {
+          "id": "p12-s05",
+          "n": 5,
+          "title": "Bias and validation"
+        },
+        {
+          "id": "p12-s06",
+          "n": 6,
+          "title": "Privacy and confidentiality"
+        },
+        {
+          "id": "p12-s07",
+          "n": 7,
+          "title": "Responsible AI"
+        },
+        {
+          "id": "p12-s08",
+          "n": 8,
+          "title": "Internal AI governance policy"
+        },
+        {
+          "id": "p12-s09",
+          "n": 9,
+          "title": "Azure AI Fundamentals (AI-901) preparation"
+        }
+      ]
+    },
+    {
+      "id": "p13",
+      "n": 13,
+      "title": "AI Integration and Automation",
+      "label": "APPLIED AI",
+      "track": "main",
+      "competence": "Deliver a bounded AI-enabled workflow that includes human review, defined success measures and clear data boundaries.",
+      "skills": [
+        {
+          "id": "p13-s01",
+          "n": 1,
+          "title": "Advanced prompting"
+        },
+        {
+          "id": "p13-s02",
+          "n": 2,
+          "title": "Copilot-assisted analysis"
+        },
+        {
+          "id": "p13-s03",
+          "n": 3,
+          "title": "Human-in-the-loop design"
+        },
+        {
+          "id": "p13-s04",
+          "n": 4,
+          "title": "Process automation"
+        },
+        {
+          "id": "p13-s05",
+          "n": 5,
+          "title": "AI use-case discovery"
+        },
+        {
+          "id": "p13-s06",
+          "n": 6,
+          "title": "Data readiness"
+        },
+        {
+          "id": "p13-s07",
+          "n": 7,
+          "title": "AI Builder and Copilot Studio"
+        },
+        {
+          "id": "p13-s08",
+          "n": 8,
+          "title": "Risk controls and measurable benefit"
+        }
+      ]
+    },
+    {
+      "id": "p14",
+      "n": 14,
+      "title": "Data Science and Machine Learning",
+      "label": "ADVANCED TECHNICAL",
+      "track": "main",
+      "competence": "Build and evaluate a model against a defined business baseline without overstating its accuracy or value.",
+      "skills": [
+        {
+          "id": "p14-s01",
+          "n": 1,
+          "title": "Descriptive statistics and probability"
+        },
+        {
+          "id": "p14-s02",
+          "n": 2,
+          "title": "Distributions, correlation and regression"
+        },
+        {
+          "id": "p14-s03",
+          "n": 3,
+          "title": "Feature engineering"
+        },
+        {
+          "id": "p14-s04",
+          "n": 4,
+          "title": "Supervised and unsupervised learning"
+        },
+        {
+          "id": "p14-s05",
+          "n": 5,
+          "title": "Classification, regression and clustering"
+        },
+        {
+          "id": "p14-s06",
+          "n": 6,
+          "title": "Train/test validation"
+        },
+        {
+          "id": "p14-s07",
+          "n": 7,
+          "title": "Model evaluation and overfitting"
+        },
+        {
+          "id": "p14-s08",
+          "n": 8,
+          "title": "Explainability"
+        }
+      ]
+    },
+    {
+      "id": "p15",
+      "n": 15,
+      "title": "Advanced AI Engineering",
+      "label": "ADVANCED AI",
+      "track": "main",
+      "competence": "Operate an AI application as a governed product, including evaluation, monitoring, change control and production support.",
+      "skills": [
+        {
+          "id": "p15-s01",
+          "n": 1,
+          "title": "Deep learning and neural networks"
+        },
+        {
+          "id": "p15-s02",
+          "n": 2,
+          "title": "PyTorch or TensorFlow"
+        },
+        {
+          "id": "p15-s03",
+          "n": 3,
+          "title": "Natural language processing"
+        },
+        {
+          "id": "p15-s04",
+          "n": 4,
+          "title": "Large language models"
+        },
+        {
+          "id": "p15-s05",
+          "n": 5,
+          "title": "Embeddings and vector retrieval"
+        },
+        {
+          "id": "p15-s06",
+          "n": 6,
+          "title": "Retrieval-augmented generation"
+        },
+        {
+          "id": "p15-s07",
+          "n": 7,
+          "title": "Agents"
+        },
+        {
+          "id": "p15-s08",
+          "n": 8,
+          "title": "Azure AI services"
+        },
+        {
+          "id": "p15-s09",
+          "n": 9,
+          "title": "MLOps, monitoring and scaling"
+        }
+      ]
+    },
+    {
+      "id": "p16",
+      "n": 16,
+      "title": "AI Governance, Strategy and Architecture",
+      "label": "LEADERSHIP DESTINATION",
+      "track": "main",
+      "competence": "Select, govern and prioritise AI initiatives at portfolio level and connect architecture decisions to risk and measurable business outcomes.",
+      "skills": [
+        {
+          "id": "p16-s01",
+          "n": 1,
+          "title": "NIST AI Risk Management Framework"
+        },
+        {
+          "id": "p16-s02",
+          "n": 2,
+          "title": "Risk assessment and governance controls"
+        },
+        {
+          "id": "p16-s03",
+          "n": 3,
+          "title": "Ethics and compliance"
+        },
+        {
+          "id": "p16-s04",
+          "n": 4,
+          "title": "Vendor evaluation"
+        },
+        {
+          "id": "p16-s05",
+          "n": 5,
+          "title": "AI maturity assessment"
+        },
+        {
+          "id": "p16-s06",
+          "n": 6,
+          "title": "Change management and workforce adoption"
+        },
+        {
+          "id": "p16-s07",
+          "n": 7,
+          "title": "Portfolio prioritisation"
+        },
+        {
+          "id": "p16-s08",
+          "n": 8,
+          "title": "Enterprise AI architecture"
+        },
+        {
+          "id": "p16-s09",
+          "n": 9,
+          "title": "Strategy and value measurement"
+        }
+      ]
+    }
+  ],
+  "gates": [
+    {
+      "id": "g01",
+      "n": 1,
+      "title": "Context",
+      "exit": "I can explain the operational process and the decision behind the metric",
+      "afterPhase": "p01"
+    },
+    {
+      "id": "g02",
+      "n": 2,
+      "title": "Platform",
+      "exit": "I can draw the Capstone flow from source to user and locate the main services",
+      "afterPhase": "p02"
+    },
+    {
+      "id": "g03",
+      "n": 3,
+      "title": "Query",
+      "exit": "I can write and explain KQL that answers a defined question",
+      "afterPhase": "p03"
+    },
+    {
+      "id": "g04",
+      "n": 4,
+      "title": "Trust",
+      "exit": "I can validate lineage, timing, duplicates, units and reconciliation",
+      "afterPhase": "p04"
+    },
+    {
+      "id": "g05",
+      "n": 5,
+      "title": "Insight",
+      "exit": "I can distinguish evidence from assumptions and explain operational limitations",
+      "afterPhase": "p05"
+    },
+    {
+      "id": "g06",
+      "n": 6,
+      "title": "Communication",
+      "exit": "I can produce a clear Power BI/Grafana output that supports a decision",
+      "afterPhase": "p06"
+    },
+    {
+      "id": "g07",
+      "n": 7,
+      "title": "Knowledge",
+      "exit": "I can document the work so another analyst can reuse it",
+      "afterPhase": "p07"
+    },
+    {
+      "id": "g08",
+      "n": 8,
+      "title": "Engineering",
+      "exit": "I can collaborate through Git/Azure DevOps and support controlled deployment",
+      "afterPhase": "p10"
+    },
+    {
+      "id": "g09",
+      "n": 9,
+      "title": "AI delivery",
+      "exit": "I can apply AI with validation, human review and governance",
+      "afterPhase": "p13"
+    },
+    {
+      "id": "g10",
+      "n": 10,
+      "title": "Strategy",
+      "exit": "I can prioritise, architect and govern AI initiatives according to risk and value",
+      "afterPhase": "p16"
+    }
+  ],
+  "certifications": [
+    {
+      "order": 1,
+      "name": "Azure AI Fundamentals",
+      "exam": "AI-901",
+      "status": "current",
+      "afterPhase": "p08",
+      "note": "The roadmap names AI-900, which retired on 2026-06-30; AI-901 replaces it (about 55–60% hands-on Microsoft Foundry, expects Python). Concepts run alongside in p12; take the exam after the early p08 Python lessons."
+    },
+    {
+      "order": 2,
+      "name": "Power BI Data Analyst",
+      "exam": "PL-300",
+      "status": "current",
+      "afterPhase": "p04",
+      "note": "Preparation is woven into p06. Skills measured as of 2026-04-20; re-check at authoring time."
+    },
+    {
+      "order": 3,
+      "name": "Microsoft Fabric fundamentals / analytics learning",
+      "status": "tbd",
+      "afterPhase": "p06",
+      "note": "Confirm the exam at authoring time."
+    },
+    {
+      "order": 4,
+      "name": "ServiceNow foundational certification",
+      "status": "tbd",
+      "afterPhase": "p11",
+      "note": "Confirm the exam at authoring time."
+    },
+    {
+      "order": 5,
+      "name": "Azure role-based learning for hosting and identity",
+      "status": "tbd",
+      "afterPhase": "p10",
+      "note": "Confirm the exam at authoring time."
+    },
+    {
+      "order": 6,
+      "name": "Advanced Azure AI / data science credential",
+      "status": "tbd",
+      "afterPhase": "p14",
+      "note": "DP-100 (retired 2026-06-01) and AI-102 (retired 2026-06-30) no longer exist; choose the current credential when p14/p15 content is authored."
+    }
+  ],
+  "portfolio": [
+    {
+      "id": "e01",
+      "title": "Capstone architecture diagram and glossary",
+      "phase": "p02"
+    },
+    {
+      "id": "e02",
+      "title": "KQL query workbook",
+      "phase": "p03"
+    },
+    {
+      "id": "e03",
+      "title": "Data-validation and reconciliation checklist",
+      "phase": "p04"
+    },
+    {
+      "id": "e04",
+      "title": "Stakeholder interview guide and problem statement template",
+      "phase": "p05"
+    },
+    {
+      "id": "e05",
+      "title": "Business case with assumptions, value, cost, feasibility and risk",
+      "phase": "p05"
+    },
+    {
+      "id": "e06",
+      "title": "Power BI report and metric dictionary",
+      "phase": "p06"
+    },
+    {
+      "id": "e07",
+      "title": "Grafana dashboard interpretation note",
+      "phase": "p06"
+    },
+    {
+      "id": "e08",
+      "title": "SharePoint knowledge page with version history",
+      "phase": "p07"
+    },
+    {
+      "id": "e09",
+      "title": "Python analysis notebook or small application",
+      "phase": "p08"
+    },
+    {
+      "id": "e10",
+      "title": "Git/Azure DevOps repository contribution",
+      "phase": "p09"
+    },
+    {
+      "id": "e11",
+      "title": "Azure hosting architecture and deployment note",
+      "phase": "p10"
+    },
+    {
+      "id": "e12",
+      "title": "UAT pack and defect log",
+      "phase": "p11"
+    },
+    {
+      "id": "e13",
+      "title": "ServiceNow incident/ticket examples permitted for learning records",
+      "phase": "p11"
+    },
+    {
+      "id": "e14",
+      "title": "Responsible AI and AI risk assessment",
+      "phase": "p12"
+    },
+    {
+      "id": "e15",
+      "title": "Machine-learning experiment report",
+      "phase": "p14"
+    },
+    {
+      "id": "e16",
+      "title": "AI solution evaluation and monitoring report",
+      "phase": "p15"
+    }
+  ]
+}
