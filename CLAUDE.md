@@ -2,7 +2,7 @@
 
 > Read this whole file before starting any milestone. Work one milestone at a time (§13), stop at its Definition of Done, and report. Update the Status block when a milestone is done.
 
-**Status:** Current milestone: **M1** · Completed: **M0** · Content runway: 0 days
+**Status:** Current milestone: **M2** · Completed: **M0, M1** · Content runway: 0 days (2 ready lessons)
 
 ---
 
@@ -21,7 +21,7 @@ These were not blocking, so they are decided here; §14 lists the ones worth con
 3. **Load**: ~2 h/day = **4 lessons × ~25 min** + buffer, 7 days/week, rest days configurable (default none). Evening study; reminders at **18:00** and **20:30**.
 4. **Accounts**: the user will create a free Cloudflare account and has (or will create) Telegram. Hosting on `*.workers.dev` is acceptable.
 5. **Repo**: private Git repository. The 17 PDFs from the Claude Project are copied into `docs/sources/` by the user before M1.
-6. **Confidentiality**: anything derived from `docs/sources/` (internal Capstone wiki pages, the roadmap itself) is confidential by default. It never ships in the deployed bundle and never leaves the device in plain text (see §6.4, §8.6). Generic technical lessons (KQL, Power BI, Python…) are public.
+6. **Confidentiality**: anything derived from `docs/sources/` (internal Capstone wiki pages, the roadmap itself) is confidential by default. It never ships in the deployed bundle and never leaves the device in plain text (see §6.4, §8.6). Generic technical lessons (KQL, Power BI, Python…) are public. *Exception (user decision, 2026-10-23):* the roadmap **structure** — phase, skill and gate titles, certifications and portfolio items in `content/roadmap.json` — ships in the public content index as §4/§6.2 describe; private lesson titles, bodies and sources never do.
 7. **Roadmap corrections** found during planning (verified on Microsoft Learn, Oct 2026): AI-900 was retired on 30 Jun 2026 and replaced by **AI-901** (same "Azure AI Fundamentals" certification; ~55–60% hands-on Microsoft Foundry and it expects Python). DP-100 (retired 1 Jun 2026) and AI-102 (retired 30 Jun 2026) no longer exist, so the roadmap's "advanced Azure AI / data science credential" must be re-checked when Phase 14/15 content is authored. PL-300 is current (skills measured as of 20 Apr 2026).
 8. **Exercises** use free public sandboxes (ADX `help` cluster, a personal free ADX cluster, Power BI Desktop) loaded with **synthetic** Capstone-like data. Real Capstone data is never pasted into the app or any external tool.
 
@@ -82,11 +82,13 @@ type TrackLabel = 'FOUNDATION' | 'CORE TECHNICAL' | 'DELIVERY' | 'ENGINEERING' |
 
 interface Roadmap {
   id: 'alfah-lubisi-skills-mastery'; sourceDoc: string; sourceDate: string; // '2026-10-20'
+  notes: string[];                // roadmap rules that don't fit elsewhere
   phases: Phase[];                // 16
   gates: Gate[];                  // 10
   certifications: Certification[];
-  portfolio: string[];            // 16 evidence items
+  portfolio: PortfolioItem[];     // 16 evidence items
 }
+interface PortfolioItem { id: string /* e01..e16 */; title: string; phase: PhaseId }  // project lessons in `phase` build it
 interface Phase {
   id: PhaseId; n: number; title: string; label: TrackLabel; track: Track;
   competence: string;             // "Practical definition of competence"
@@ -109,7 +111,7 @@ interface LessonMeta {
   visibility: 'public' | 'private';
   status: 'ready' | 'stub';                    // stubs are never scheduled
   prereqs: LessonId[];                         // default: previous lesson in the same skill
-  evidence?: string;                           // portfolio item this lesson contributes to
+  evidence?: string;                           // PortfolioItem id this lesson contributes to
   sources: Source[];                           // ≥ 1 for ready lessons
   hash: string;                                // content hash, for change detection
 }
@@ -182,6 +184,7 @@ mastery-queue/
 ├─ CLAUDE.md                     # this file
 ├─ README.md                     # 10 lines: what it is, link to CLAUDE.md, setup commands
 ├─ package.json  tsconfig.json  vite.config.ts  wrangler.jsonc  index.html
+├─ tsconfig.sw.json  tsconfig.node.json   # WebWorker lib for sw.ts; Node types + NodeNext for vite.config.ts, scripts/, tests/content/
 ├─ public/                       # icons (192/512/maskable), robots.txt (Disallow: /), _headers (CSP, noindex)
 ├─ src/
 │  ├─ main.tsx                   # boot: open DB → read snapshot → render → hydrate full state
@@ -211,7 +214,7 @@ mastery-queue/
 │  ├─ index.ts                   # export default { fetch, scheduled }
 │  ├─ auth.ts  store.ts  push.ts  telegram.ts
 ├─ content/
-│  ├─ roadmap.json               # canonical structure (from Appendix A in M1)
+│  ├─ roadmap.json               # canonical structure (16 phases, 133 skills, 10 gates, 16 portfolio items)
 │  ├─ lessons/p01/…  lessons/p03/p03-s02-l01.md …       # public lessons
 │  ├─ private/p01/…                                     # private lessons (never deployed)
 │  └─ datasets/                  # synthetic CSVs for labs (generated, seeded)
@@ -219,7 +222,8 @@ mastery-queue/
 ├─ scripts/
 │  ├─ content-plugin.ts          # Vite plugin: builds + watches content during dev/build
 │  ├─ build-content.ts           # md → .generated/content/*.json ; --private → dist-private/private-pack.json
-│  ├─ content-check.ts           # schema, IDs, prereq DAG, sources, visibility, word counts
+│  ├─ content-check.ts           # schema, IDs, prereq DAG, sources, visibility, word counts; --dist = leak scan
+│  ├─ lib/  lessons.ts  markdown.ts  stubs.ts  validate.ts   # shared by the three content scripts
 │  ├─ gen-datasets.ts            # seeded synthetic data generator
 │  ├─ check-size.ts              # gzip budgets
 │  └─ telegram-chatid.ts         # prints chat_id via getUpdates
@@ -233,13 +237,13 @@ mastery-queue/
 
 The roadmap PDF is regular: each phase has a track label, a "Skills to learn" bullet list and a "Practical definition of competence". So the mapping is mechanical: **phase → `Phase`** (16), **bullet → `Skill`** (133), **mastery gate → `gate` lesson** placed at the end of the phase it certifies (10), **evidence-portfolio item → `project` lesson(s)** at the end of the most relevant phase (16), **certification → metadata** that lesson authors target. The 23-stage "mastery path" is a coarser view of the same content and is not modelled separately. Lessons are *not* in the PDF; they are authored per skill (§6.3).
 
-**Import without manual data entry:** the parse has already been done during planning and is in **Appendix A**. In M1, convert Appendix A to `content/roadmap.json`, add a test that asserts 16 phases / 133 skills / 10 gates / 16 portfolio items, then **delete Appendix A from this file** and leave a one-line pointer (keeps this file lean for every future session). If the roadmap PDF is revised later, re-derive `roadmap.json` by reading the new PDF and diff it against the old one; never renumber existing IDs.
+**Import without manual data entry:** done in M1 — `content/roadmap.json` was generated from the planning parse and `tests/content/roadmap.test.ts` asserts 16 phases / 133 skills / 10 gates / 16 portfolio items. If the roadmap PDF is revised later, re-derive `roadmap.json` by reading the new PDF and diff it against the old one; never renumber existing IDs.
 
 **Queue tracks:** main = p01→p11, then p13→p16. Alongside = p12 (AI foundations), which starts on day 1 and is interleaved (§7.2), matching the roadmap's "AI-900 and responsible AI — alongside" instruction. Because AI-901 is now Foundry-hands-on and expects Python, p12 is split: concept lessons (AI vs automation vs analytics, generative AI, prompting, hallucinations, bias, privacy, responsible AI, internal policy) run alongside from day 1; the AI-901 hands-on and exam-prep lessons carry prereqs on the first p08 Python lessons, so the scheduler naturally holds them back.
 
 ### 6.2 Build pipeline
 
-`scripts/build-content.ts` reads `content/lessons/**.md` and `content/private/**.md`, validates front matter, compiles markdown with `marked` (raw HTML tokens are **escaped**, never passed through; external links get `rel="noopener" target="_blank"`), and writes: `.generated/content/index.<hash>.json` (roadmap + every `LessonMeta`, with private lessons reduced to `{id, phase, skill, order, kind, minutes, visibility, status, prereqs}` and title `'Private lesson'`); one chunk per phase with **public** bodies only; and, with `--private`, `dist-private/private-pack.json` holding private titles, bodies, checks and sources. Skills with no authored lessons get auto-generated **stub** entries so the queue shape is visible from day 1. The service worker precaches the index and all public chunks.
+`scripts/build-content.ts` reads `content/lessons/**.md` and `content/private/**.md`, validates front matter, compiles markdown with `marked` (raw HTML tokens are **escaped**, never passed through; external links get `rel="noopener" target="_blank"`), and writes: `.generated/content/index.<hash>.json` (roadmap + every `LessonMeta`, with private lessons reduced to `{id, phase, skill, order, kind, minutes, visibility, status, prereqs}` and title `'Private lesson'`); one chunk per phase with **public** bodies only; and, with `--private`, `dist-private/private-pack.json` holding private titles, bodies, checks and sources. Skills with no authored lessons get auto-generated **stub** entries so the queue shape is visible from day 1 (3 per skill in p01–p04, 2 elsewhere; 2 project parts per portfolio item; one stub per gate — a skill, a phase's projects or a gate loses its stubs as soon as anything for it is authored). The service worker precaches the index and all public chunks. `virtual:mq-content` (from `scripts/content-plugin.ts`) gives the app the hashed index URL.
 
 `npm run build` must fail if any private title, private body, or anything from `docs/sources/` appears in `dist/` (the content-check greps `dist/` for every private lesson's title and a sentinel comment `<!-- mq-private -->` that the build injects into each private body).
 
@@ -248,7 +252,7 @@ The roadmap PDF is regular: each phase has a track label, a "Skills to learn" bu
 Claude Code authors lesson content from **two inputs**: the PDFs in `docs/sources/` (read them with the Read tool; rasterize pages only where text extraction loses meaning) and **public web sources it searches and verifies at authoring time**. Rules:
 
 1. **Just-in-time waves.** Keep the **runway** (ready, uncompleted lessons ahead of the queue head ÷ daily target) at ≥ 14 days. Author one phase (or part of one) per wave. Beyond the runway, lessons stay stubs. When asked "author the next content wave", compute the runway, pick the next phases, author, run `npm run content:check`, report.
-2. **Shape.** One lesson = 20–30 minutes. File = YAML front matter (`LessonMeta` fields minus `hash`) + these sections, in order: **Why this matters at Tharisa** (≤ 80 words, ties the skill to a real Capstone process, system or KPI), **Learn** (≤ 600 words, plain English, one worked example), **Do** (≤ 15 min, exact numbered steps in a named sandbox, with an expected result to self-check against), **Check** (3 questions with answers inside `<details>`-style check blocks parsed into `checks`), **Go deeper** (optional, ≤ 3 links).
+2. **Shape.** One lesson = 20–30 minutes. File = YAML front matter (`LessonMeta` fields minus `hash`) + these sections, in order: **Why this matters at Tharisa** (≤ 80 words, ties the skill to a real Capstone process, system or KPI), **Learn** (≤ 600 words, plain English, one worked example), **Do** (≤ 15 min, exact numbered steps in a named sandbox, with an expected result to self-check against), **Check** (3 questions, each written as a `**Q:** question` line followed by an `**A:** answer` paragraph; the build parses these into `checks` and the Lesson screen shows them as tap-to-reveal), **Go deeper** (optional, ≤ 3 links). Sections are `## ` headings; the title lives only in front matter. Front matter needs `id, title, kind, minutes, visibility, status, sources`; `phase`, `skill`, `order` and `prereqs` default from the ID (prereqs → previous lesson of the skill; set them explicitly for cross-skill dependencies such as AI-901 hands-on → p08). Raw HTML is escaped and images are rejected. Project and gate lessons need at least "Why this matters at Tharisa" and "Do". Private lesson titles must differ from every public roadmap title. `content/lessons/p12/p12-s01-l01.md` and `content/private/p01/p01-s01-l01.md` are reference examples.
 3. **Depth by phase.** Phases 1–4: 2–4 lessons per skill. Phases 5–11: 2–3. Phases 12–16: 1–3 (introductory; depth comes from projects). Each phase ends with its project part(s) (`kind: project`, may span 2–4 sessions of ≤ 30 min) and its gate (`kind: gate`: a self-assessment against the gate's exit statement plus a short practical). Expect ~350 lessons in total.
 4. **Source hierarchy.** (a) `docs/sources/*` for anything about Tharisa, Capstone, plants, dashboards, apps, data flow — **never invent Tharisa specifics**; if the docs are silent, write "Not documented in the Capstone wiki — confirm with the Capstone team" and give the question to ask. (b) Official vendor/standards docs: learn.microsoft.com (KQL, ADX, ADF, Fabric, Power BI, Azure, DevOps, Entra, Foundry, Copilot Studio, certification study guides), grafana.com/docs, docs.python.org, pandas/NumPy/scikit-learn docs, pytorch.org, git-scm.com, nist.gov (AI RMF / NIST AI 100-1), ServiceNow docs. (c) Reputable secondary sources only when (a)/(b) don't cover it. Every web source gets a `retrieved` date and its URL must load at authoring time.
 5. **Writing rules.** Paraphrase; quotations ≤ 15 words and rare. No copied course text. Cert-prep lessons follow the **current** official "skills measured" outline, fetched at authoring time (exams change: AI-900 → AI-901 is the live example).
@@ -375,6 +379,7 @@ npm run dev:worker     # build, then `wrangler dev --test-scheduled` (app + /api
 npm test               # vitest run (core, shared, data, worker, content)
 npm run test:watch
 npm run content:check  # validate lessons, IDs, prereq DAG, sources, visibility, budgets
+npm run content:build  # write .generated/content/ only (the build runs this first)
 npm run pack:private   # → dist-private/private-pack.json (import on each device)
 npm run build          # content build → tsc --noEmit → vite build → private-leak check → size check
 npm run deploy         # build && wrangler deploy
@@ -454,97 +459,4 @@ Each milestone ends in a runnable state. Stop and report at each Definition of D
 
 ---
 
-## Appendix A — Roadmap seed (parsed from `Alfah_Lubisi_Skills_Mastery_Roadmap.pdf`, dated 2026-10-20)
-
-> **M1: convert this appendix to `content/roadmap.json`, add the count test, then delete this appendix and replace it with: "Roadmap structure lives in content/roadmap.json."**
-
-Skill IDs are `pNN-sMM` in the listed order. Track: main unless marked alongside.
-
-**p01 · Tharisa Operations and Business Context** · FOUNDATION
-Competence: Explain what a KPI means physically, what decision it supports, and what operational factors could make it misleading.
-Skills: Mining and material movement · Processing and plant flow · Genesis, Voyager and Vulcan context · Engineering and maintenance · Logistics · Shift structures and production measures · Equipment and asset context · Downtime, throughput, recovery and grade
-
-**p02 · Capstone Fundamentals and Architecture** · FOUNDATION
-Competence: Draw and narrate the flow from operational source to business decision, including where data is ingested, stored, queried, visualised and documented.
-Skills: Capstone purpose and portal · Operational source systems · Data Loader · Azure Data Factory · Azure Data Explorer · KQL and reusable query functions · Asset Centre · Grafana · Capstone Wiki and documentation · SQL databases, APIs, IP.21/historian, LIMS, weighbridge, IoT, PLC/SCADA and D365 integrations
-
-**p03 · Azure Data Explorer, KQL and SQL** · CORE TECHNICAL
-Competence: Independently answer a defined operational question with a readable KQL query and explain the logic and limitations.
-Skills: ADX clusters, databases, tables, schemas and functions · Basic KQL: take, project, where, sort and date filters · Aggregations: summarize, count, sum, average, minimum and maximum · Time-series analysis · Joins and time-window matching · Duplicate handling and dataset profiling · Reusable query logic · SQL foundations after KQL
-
-**p04 · Data Quality, Validation and Governance** · CORE TECHNICAL
-Competence: Produce a validation note that demonstrates whether the result can be trusted and records known gaps.
-Skills: Data lineage and source-to-target mapping · Reconciliation to source · Missing values and duplicates · Timestamps and time zones · Units and refresh frequency · Metric definitions · Data ownership · Permissions, restricted data and role-based access · Auditability and documented exceptions
-
-**p05 · Business Analysis and Business Cases** · DELIVERY
-Competence: Convert a vague request into a testable problem statement, evidence plan and decision-ready business case.
-Skills: Stakeholder interviews · Requirements gathering · Problem and outcome definition · Current-state process mapping · Available versus missing data · Feasibility, benefits, costs and risks · Value propositions and success measures · Living business cases · Decision history and reusable findings
-
-**p06 · Power BI, Grafana and Visual Analytics** · DELIVERY
-Competence: Build a report that is traceable to validated data, communicates the required decision and includes appropriate access controls.
-Skills: Power Query · Data modelling and relationships · Measures · Report and dashboard design · Filters and drilldown · KPI design · Workspaces and controlled access · Row-level security · Grafana panels, variables, trends and operational monitoring
-
-**p07 · SharePoint and Knowledge Management** · DELIVERY
-Competence: Publish a maintained, searchable knowledge page that allows another analyst to reuse the work without repeating discovery.
-Skills: Sites and document libraries · Information architecture and metadata · Permissions and versioning · Search and discoverability · Knowledge pages · Authoritative document practices · Structuring content for AI retrieval · Preserving project context, assumptions and decision history
-
-**p08 · Python, APIs and Application Foundations** · ENGINEERING
-Competence: Create a small, documented analysis or service that consumes data, performs a useful transformation and produces a repeatable result.
-Skills: Python syntax and problem solving · Pandas and NumPy · Visualisation · Working with files and structured data · JSON and APIs · Scikit-learn foundations · Application architecture basics
-
-**p09 · Git, Azure DevOps and Collaboration** · ENGINEERING
-Competence: Move a locally developed solution into a shared repository and complete a controlled change through review and merge.
-Skills: Repositories · Branches, commits, push and pull · Pull requests and code review · Merging and conflict awareness · Azure DevOps Repos · Boards and work tracking · Pipelines and controlled releases · Change management and shared development practices
-
-**p10 · Azure Hosting, Identity and Deployment** · ENGINEERING
-Competence: Deploy a simple authenticated application in an approved environment and explain its key components and access model.
-Skills: Azure resource fundamentals · Web hosting/App Service concepts · Linux-hosted applications · Databases and supporting services · Microsoft identity and authentication · Credentials and secret handling · Development, test and production environments · Monitoring, networking and security basics
-
-**p11 · Testing, UAT and Service Delivery** · DELIVERY
-Competence: Create a test pack that another person can execute and link defects or incidents to an auditable resolution.
-Skills: Acceptance criteria · Test cases and expected results · User acceptance testing · Defect logging, severity and priority · Retesting and release validation · ServiceNow incidents, requests, ownership, escalation, SLA awareness and closure
-
-**p12 · AI Foundations and Responsible Use** · AI FOUNDATION · **alongside**
-Competence: Use AI safely for a real task, validate the result, document the risk and explain why the use is appropriate.
-Skills: AI versus automation versus analytics · Generative AI · Prompting · Hallucinations and limitations · Bias and validation · Privacy and confidentiality · Responsible AI · Internal AI governance policy · AI-900 preparation *(retitle "Azure AI Fundamentals (AI-901) preparation"; AI-900 retired 2026-06-30)*
-
-**p13 · AI Integration and Automation** · APPLIED AI
-Competence: Deliver a bounded AI-enabled workflow that includes human review, defined success measures and clear data boundaries.
-Skills: Advanced prompting · Copilot-assisted analysis · Human-in-the-loop design · Process automation · AI use-case discovery · Data readiness · AI Builder and Copilot Studio · Risk controls and measurable benefit
-
-**p14 · Data Science and Machine Learning** · ADVANCED TECHNICAL
-Competence: Build and evaluate a model against a defined business baseline without overstating its accuracy or value.
-Skills: Descriptive statistics and probability · Distributions, correlation and regression · Feature engineering · Supervised and unsupervised learning · Classification, regression and clustering · Train/test validation · Model evaluation and overfitting · Explainability
-
-**p15 · Advanced AI Engineering** · ADVANCED AI
-Competence: Operate an AI application as a governed product, including evaluation, monitoring, change control and production support.
-Skills: Deep learning and neural networks · PyTorch or TensorFlow · Natural language processing · Large language models · Embeddings and vector retrieval · Retrieval-augmented generation · Agents · Azure AI services · MLOps, monitoring and scaling
-
-**p16 · AI Governance, Strategy and Architecture** · LEADERSHIP DESTINATION
-Competence: Select, govern and prioritise AI initiatives at portfolio level and connect architecture decisions to risk and measurable business outcomes.
-Skills: NIST AI Risk Management Framework · Risk assessment and governance controls · Ethics and compliance · Vendor evaluation · AI maturity assessment · Change management and workforce adoption · Portfolio prioritisation · Enterprise AI architecture · Strategy and value measurement
-
-Skill counts: 8, 10, 8, 9, 9, 9, 8, 7, 8, 8, 6, 9, 8, 8, 9, 9 = **133**.
-
-**Gates** (id · title · exit statement · after phase):
-g01 Context · I can explain the operational process and the decision behind the metric · p01
-g02 Platform · I can draw the Capstone flow from source to user and locate the main services · p02
-g03 Query · I can write and explain KQL that answers a defined question · p03
-g04 Trust · I can validate lineage, timing, duplicates, units and reconciliation · p04
-g05 Insight · I can distinguish evidence from assumptions and explain operational limitations · p05
-g06 Communication · I can produce a clear Power BI/Grafana output that supports a decision · p06
-g07 Knowledge · I can document the work so another analyst can reuse it · p07
-g08 Engineering · I can collaborate through Git/Azure DevOps and support controlled deployment · p10
-g09 AI delivery · I can apply AI with validation, human review and governance · p13
-g10 Strategy · I can prioritise, architect and govern AI initiatives according to risk and value · p16
-
-**Certifications** (order · target · status · after phase):
-1 · Azure AI Fundamentals — roadmap says AI-900; take **AI-901** · current (AI-900 retired 2026-06-30) · concepts with p12, exam after early p08
-2 · Power BI Data Analyst (PL-300) · current · after p04 (prep woven into p06)
-3 · Microsoft Fabric fundamentals / analytics learning · tbd (confirm exam at authoring) · after p06
-4 · ServiceNow foundational certification · tbd · after p11
-5 · Azure role-based learning for hosting and identity · tbd · after p10
-6 · Advanced Azure AI / data science credential · tbd (DP-100 and AI-102 retired mid-2026) · after p14/p15
-Rule from the roadmap: each credential pairs with one workplace artifact (portfolio item).
-
-**Evidence portfolio** (→ `project` lessons): Capstone architecture diagram and glossary (p02) · KQL query workbook (p03) · Data-validation and reconciliation checklist (p04) · Stakeholder interview guide and problem statement template (p05) · Business case with assumptions, value, cost, feasibility and risk (p05) · Power BI report and metric dictionary (p06) · Grafana dashboard interpretation note (p06) · SharePoint knowledge page with version history (p07) · Python analysis notebook or small application (p08) · Git/Azure DevOps repository contribution (p09) · Azure hosting architecture and deployment note (p10) · UAT pack and defect log (p11) · ServiceNow incident/ticket examples permitted for learning records (p11) · Responsible AI and AI risk assessment (p12) · Machine-learning experiment report (p14) · AI solution evaluation and monitoring report (p15)
+Roadmap structure lives in content/roadmap.json.
