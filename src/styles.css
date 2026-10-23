@@ -94,6 +94,30 @@ a {
   font-variant-numeric: tabular-nums;
 }
 
+.plan {
+  list-style: none;
+  margin: calc(var(--gap) * 1.5) 0;
+  padding: 0;
+  border-top: 1px solid var(--line);
+}
+
+.plan a {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--gap);
+  min-height: 44px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--text);
+  text-decoration: none;
+}
+
+.plan a .muted {
+  flex: none;
+  font-variant-numeric: tabular-nums;
+}
+
 .button {
   display: inline-flex;
   align-items: center;

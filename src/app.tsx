@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'preact/hooks';
+import { LESSON_ID } from './core/types';
 import { Lesson } from './screens/Lesson';
 import { Progress } from './screens/Progress';
 import { Today } from './screens/Today';
 
 export type Route = { name: 'today' } | { name: 'lesson'; id: string } | { name: 'progress' };
-
-// Lesson IDs (CLAUDE.md §4): p03-s02-l01 = lesson, p03-g03 = gate, p03-x01 = project part.
-const LESSON_ID = /^p\d{2}-(s\d{2}-l\d{2}|g\d{2}|x\d{2})$/;
 
 /** Maps a location hash to a route. Anything unknown falls back to Today. */
 export function parseRoute(hash: string): Route {
