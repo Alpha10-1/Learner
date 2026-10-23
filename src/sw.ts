@@ -1,9 +1,10 @@
 // Service worker, built by vite-plugin-pwa (injectManifest) into dist/sw.js.
 // M0: precache the app shell so the app opens offline after one online visit.
 // Push, notification clicks, acks and the update flow arrive in M6 and M8.
-import { cleanupOutdatedCaches, precacheAndRoute, type PrecacheEntry } from 'workbox-precaching';
+import { cleanupOutdatedCaches, precacheAndRoute } from 'workbox-precaching';
 
-declare const self: ServiceWorkerGlobalScope & { __WB_MANIFEST: (PrecacheEntry | string)[] };
+// workbox-precaching adds the precache list's type to ServiceWorkerGlobalScope.
+declare const self: ServiceWorkerGlobalScope;
 
 cleanupOutdatedCaches();
 
