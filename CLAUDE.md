@@ -2,7 +2,7 @@
 
 > Read this whole file before starting any milestone. Work one milestone at a time (§13), stop at its Definition of Done, and report. Update the Status block when a milestone is done.
 
-**Status:** Current milestone: **M0** · Completed: — · Content runway: 0 days
+**Status:** Current milestone: **M1** · Completed: **M0** · Content runway: 0 days
 
 ---
 
